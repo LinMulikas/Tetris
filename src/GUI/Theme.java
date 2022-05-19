@@ -1,13 +1,8 @@
 package GUI;
 
-import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Theme{
-    Color color;
-
-    Theme(){}
-
-    public Theme(Color color){
-        this.color = color;
-    }
+public enum Theme{
+    theme1, theme2, theme3;
 }

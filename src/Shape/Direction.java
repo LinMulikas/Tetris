@@ -1,5 +1,5 @@
 package Shape;
 
-public enum State{
+public enum Direction{
     R, L, O, D;
 }

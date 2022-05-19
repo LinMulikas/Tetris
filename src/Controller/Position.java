@@ -1,8 +1,9 @@
-package Game;
+package Controller;
 
 public class Position implements Cloneable{
-    int i;
-    int j;
+    public int i;
+    public int j;
+
     public Position(int a, int b){
         this.i = a;
         this.j = b;
@@ -17,6 +18,22 @@ public class Position implements Cloneable{
         catch(CloneNotSupportedException e){
             throw new AssertionError();
         }
+    }
+
+    public void goDown(){
+        this.i ++;
+    }
+
+    public void goUp(){
+        this.i --;
+    }
+
+    public void goLeft(){
+        this.j --;
+    }
+
+    public void goRight(){
+        this.j ++;
     }
 
     public Position up(){

@@ -12,7 +12,13 @@ public abstract class Shape{
     private int velocity = 1;
     public Direction state = Direction.O;
 
+    public abstract SingleBlock[] downBlocks();
+
+    public abstract SingleBlock[] leftBlocks();
+
     public abstract void leftRotate();
+
+    public abstract SingleBlock[] rightBlocks();
 
     public abstract void rightRotate();
 
@@ -20,27 +26,32 @@ public abstract class Shape{
 
     public abstract SingleBlock[] getBlocks();
 
+    public abstract SingleBlock[] rightRotatedBlocks();
+
     public abstract void setTheme(Theme theme);
 
     public static String getColor(Shape shape){
+        String str = shape.getClass().getTypeName();
         switch(shape.getClass().getName()){
-            case "Shape_I":
+            case "Shape.Shape_I":
                 return "Cyan";
-            case "Shape_J":
+            case "Shape.Shape_J":
                 return "Blue";
-            case "Shape_L":
+            case "Shape.Shape_L":
                 return "Orange";
-            case "Shape_O":
+            case "Shape.Shape_O":
                 return "Yellow";
-            case "Shape_S":
+            case "Shape.Shape_S":
                 return "Green";
-            case "Shape_T":
+            case "Shape.Shape_T":
                 return "Purple";
-            case "Shape_Z":
+            case "Shape.Shape_Z":
                 return "Red";
         }
         return null;
     }
+
+    public abstract Shape cloneShape();
 
     public static String getThemeID(Shape shape){
         switch(shape.theme){
@@ -53,6 +64,8 @@ public abstract class Shape{
         }
         return null;
     }
+
+    public abstract SingleBlock[] leftRotatedBlocks();
 
     public void speedUp(){
         this.velocity = 2;

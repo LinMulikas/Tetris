@@ -5,10 +5,10 @@ import Shape.SingleBlock;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import static Controller.Game.theGame;
 import static GUI.Theme.*;
 
 
@@ -85,6 +85,7 @@ public class iScene{
 
         TextArea ta_infoArea = new TextArea();
         ta_infoArea.setVisible(true);
+        theGame.infoArea = ta_infoArea;
 
         GridPane grid_ctrlPane = new GridPane();
         Button btn_ctrl1 = new Button("Control 1");
@@ -172,6 +173,57 @@ public class iScene{
         vb_mainGame.getChildren().addAll(menuGameBar, hb_gamePane);
 
         gameScene = new Scene(vb_mainGame);
+        gameScene.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.Q){
+                if(theGame.tryLeftRotate()){
+                    theGame.shapeRotateLeft();
+                }else{
+                    theGame.putMessage("左旋失败\n");
+                }
+            }
+            if(event.getCode() == KeyCode.E){
+                if(theGame.tryRightRotate()){
+                    theGame.shapeRotateRight();
+                }else{
+                    theGame.putMessage("右旋失败\n");
+                }
+            }
+            if(event.getCode() == KeyCode.A){
+                if(theGame.tryMoveLeft()){
+                    theGame.shapeMoveLeft();
+                }else{
+                    theGame.putMessage("左移失败\n");
+                }
+            }
+            if(event.getCode() == KeyCode.D){
+                if(theGame.tryMoveRight()){
+                    theGame.shapeMoveRight();
+                }else{
+                    theGame.putMessage("右移失败\n");
+                }
+            }
+            if(event.getCode() == KeyCode.S){
+                if(theGame.tryDown()){
+                    theGame.shapeMoveDown();
+                    theGame.drawBlocks();
+                }else{
+                    theGame.meltShape();
+                    if(theGame.creatCurrentShape()){
+                        theGame.drawBlocks();
+                    }else{
+                        System.out.println("Game Over");
+                    }
+                    theGame.drawBlocks();
+                    try{
+                        theGame.checkRows();
+                    }
+                    catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
+
 
 }

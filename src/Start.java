@@ -18,5 +18,6 @@ public class Start extends Application{
         Scene scene = iScene.welcomeScene;
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 }

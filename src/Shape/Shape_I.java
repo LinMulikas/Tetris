@@ -6,7 +6,6 @@ import Controller.Position;
 import static Shape.Direction.*;
 
 public class Shape_I extends Shape{
-    Position p = new Position(  1, 3);
 
     public Shape_I(){
         theme = Theme.theme1;
@@ -44,144 +43,7 @@ public class Shape_I extends Shape{
     }
 
     @Override
-    public SingleBlock[] getBlocks(){
-        return this.blocks;
-    }
-
-    @Override
-    public SingleBlock[] rightRotatedBlocks(){
-        Shape_I result = this.cloneShape();
-        switch(result.state){
-            case O:
-                result.state = R;
-                result.p.i -= 1;
-                result.p.j += 2;
-                result.extendBlocks();
-                return result.blocks;
-            case R:
-                result.state = D;
-                result.p.i += 2;
-                result.p.j += 1;
-                result.extendBlocks();
-                return result.blocks;
-            case D:
-                result.state = L;
-                result.p.i += 1;
-                result.p.j -= 2;
-                result.extendBlocks();
-                return result.blocks;
-            case L:
-                result.state = O;
-                result.p.i -= 2;
-                result.p.j -= 1;
-                result.extendBlocks();
-                return result.blocks;
-        }
-
-        return null;
-    }
-
-    @Override
-    public SingleBlock[] downBlocks(){
-        SingleBlock[] ans = new SingleBlock[this.blocks.length];
-        for(int i = 0; i < ans.length; i++){
-            ans[i] = new SingleBlock();
-        }
-
-        for(int i = 0; i < ans.length; i++){
-            ans[i].position = this.blocks[i].position.down();
-        }
-        return ans;
-    }
-
-    @Override
-    public SingleBlock[] leftBlocks(){
-        SingleBlock[] ans = new SingleBlock[this.blocks.length];
-        for(int i = 0; i < ans.length; i++){
-            ans[i] = new SingleBlock();
-        }
-
-        for(int i = 0; i < ans.length; i++){
-            ans[i].position = this.blocks[i].position.left();
-        }
-        return ans;
-    }
-
-    @Override
-    public void leftRotate(){
-        switch(state){
-            case O:
-                this.state = L;
-                this.p.i += 2;
-                this.p.j += 1;
-                this.extendBlocks();
-                return;
-            case R:
-                this.state = O;
-                this.p.i += 1;
-                this.p.j -= 2;
-                this.extendBlocks();
-                return;
-            case D:
-                this.state = R;
-                this.p.i -= 2;
-                this.p.j -= 1;
-                this.extendBlocks();
-                break;
-            case L:
-                this.state = D;
-                this.p.i -= 1;
-                this.p.j += 2;
-                this.extendBlocks();
-        }
-    }
-
-    @Override
-    public SingleBlock[] rightBlocks(){
-        SingleBlock[] ans = new SingleBlock[this.blocks.length];
-        for(int i = 0; i < ans.length; i++){
-            ans[i] = new SingleBlock();
-        }
-
-        for(int i = 0; i < ans.length; i++){
-            ans[i].position = this.blocks[i].position.right();
-        }
-        return ans;
-    }
-
-    public SingleBlock[] leftRotatedBlocks(){
-        Shape_I result = this.cloneShape();
-        switch(result.state){
-            case O:
-                result.state = L;
-                result.p.i += 2;
-                result.p.j += 1;
-                result.extendBlocks();
-                return result.blocks;
-            case R:
-                result.state = O;
-                result.p.i += 1;
-                result.p.j -= 2;
-                result.extendBlocks();
-                return result.blocks;
-            case D:
-                result.state = R;
-                result.p.i -= 2;
-                result.p.j -= 1;
-                result.extendBlocks();
-                return result.blocks;
-            case L:
-                result.state = D;
-                result.p.i -= 1;
-                result.p.j += 2;
-                result.extendBlocks();
-                return result.blocks;
-        }
-        return null;
-    }
-
-    // 克隆一个位置等关键信息相同的该形状
-    public Shape_I cloneShape(){
+    public Shape cloneShape(){
         Shape_I result = new Shape_I();
         result.p = new Position(this.p.i, this.p.j);
         result.state = this.state;
@@ -190,35 +52,6 @@ public class Shape_I extends Shape{
             result.blocks[i] = new SingleBlock();
         }
         return result;
-    }
-
-    @Override
-    public void rightRotate(){
-        switch(state){
-            case O:
-                this.state = R;
-                this.p.i -= 1;
-                this.p.j += 2;
-                this.extendBlocks();
-                return;
-            case R:
-                this.state = D;
-                this.p.i += 2;
-                this.p.j += 1;
-                this.extendBlocks();
-                return;
-            case D:
-                this.state = L;
-                this.p.i += 1;
-                this.p.j -= 2;
-                this.extendBlocks();
-                return;
-            case L:
-                this.state = O;
-                this.p.i -= 2;
-                this.p.j -= 1;
-                this.extendBlocks();
-        }
     }
 
     @Override

@@ -3,49 +3,8 @@ package Shape;
 import GUI.Theme;
 
 public class Shape_O extends Shape{
-
-
-    @Override
-    public SingleBlock[] downBlocks(){
-        return new SingleBlock[0];
-    }
-
-    @Override
-    public SingleBlock[] leftBlocks(){
-        return new SingleBlock[0];
-    }
-
-    @Override
-    public void leftRotate(){
-
-    }
-
-    @Override
-    public SingleBlock[] rightBlocks(){
-        return new SingleBlock[0];
-    }
-
-    @Override
-    public void rightRotate(){
-
-    }
-
     @Override
     public void extendBlocks(){
-    }
-
-    @Override
-    public SingleBlock[] getBlocks(){
-        return new SingleBlock[0];
-    }
-
-    @Override
-    public SingleBlock[] rightRotatedBlocks(){
-        return new SingleBlock[0];
-    }
-
-    @Override
-    public void setTheme(Theme theme){
 
     }
 
@@ -55,7 +14,7 @@ public class Shape_O extends Shape{
     }
 
     @Override
-    public SingleBlock[] leftRotatedBlocks(){
-        return new SingleBlock[0];
+    public void setTheme(Theme theme){
+
     }
 }

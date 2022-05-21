@@ -1,5 +1,6 @@
 package Shape;
 
+import Controller.Position;
 import GUI.Theme;
 
 import java.util.Random;
@@ -7,26 +8,174 @@ import java.util.Random;
 import static Shape.Direction.*;
 
 public abstract class Shape{
+    Position p = new Position(1, 3);
     Theme theme;
     public SingleBlock[] blocks;
     private int velocity = 1;
     public Direction state = Direction.O;
 
-    public abstract SingleBlock[] downBlocks();
+    public SingleBlock[] downBlocks(){
+        SingleBlock[] ans = new SingleBlock[this.blocks.length];
+        for(int i = 0; i < ans.length; i++){
+            ans[i] = new SingleBlock();
+        }
 
-    public abstract SingleBlock[] leftBlocks();
+        for(int i = 0; i < ans.length; i++){
+            ans[i].position = this.blocks[i].position.down();
+        }
+        return ans;
+    }
 
-    public abstract void leftRotate();
+    public SingleBlock[] leftBlocks(){
+        SingleBlock[] ans = new SingleBlock[this.blocks.length];
+        for(int i = 0; i < ans.length; i++){
+            ans[i] = new SingleBlock();
+        }
 
-    public abstract SingleBlock[] rightBlocks();
+        for(int i = 0; i < ans.length; i++){
+            ans[i].position = this.blocks[i].position.left();
+        }
+        return ans;
+    }
 
-    public abstract void rightRotate();
+    public void leftRotate(){
+        switch(state){
+            case O:
+                this.state = L;
+                this.p.i += 2;
+                this.p.j += 1;
+                this.extendBlocks();
+                return;
+            case R:
+                this.state = O;
+                this.p.i += 1;
+                this.p.j -= 2;
+                this.extendBlocks();
+                return;
+            case D:
+                this.state = R;
+                this.p.i -= 2;
+                this.p.j -= 1;
+                this.extendBlocks();
+                break;
+            case L:
+                this.state = D;
+                this.p.i -= 1;
+                this.p.j += 2;
+                this.extendBlocks();
+        }
+    }
+
+    public SingleBlock[] rightBlocks(){
+        SingleBlock[] ans = new SingleBlock[this.blocks.length];
+        for(int i = 0; i < ans.length; i++){
+            ans[i] = new SingleBlock();
+        }
+
+        for(int i = 0; i < ans.length; i++){
+            ans[i].position = this.blocks[i].position.right();
+        }
+        return ans;
+    }
+
+    public void rightRotate(){
+        switch(state){
+            case O:
+                this.state = R;
+                this.p.i -= 1;
+                this.p.j += 2;
+                this.extendBlocks();
+                return;
+            case R:
+                this.state = D;
+                this.p.i += 2;
+                this.p.j += 1;
+                this.extendBlocks();
+                return;
+            case D:
+                this.state = L;
+                this.p.i += 1;
+                this.p.j -= 2;
+                this.extendBlocks();
+                return;
+            case L:
+                this.state = O;
+                this.p.i -= 2;
+                this.p.j -= 1;
+                this.extendBlocks();
+        }
+    }
 
     public abstract void extendBlocks();
 
-    public abstract SingleBlock[] getBlocks();
+    public SingleBlock[] getBlocks(){
+        return this.blocks;
+    }
 
-    public abstract SingleBlock[] rightRotatedBlocks();
+    public SingleBlock[] leftRotatedBlocks(){
+        Shape result = this.cloneShape();
+        switch(result.state){
+            case O:
+                result.state = L;
+                result.p.i += 2;
+                result.p.j += 1;
+                result.extendBlocks();
+                return result.blocks;
+            case R:
+                result.state = O;
+                result.p.i += 1;
+                result.p.j -= 2;
+                result.extendBlocks();
+                return result.blocks;
+            case D:
+                result.state = R;
+                result.p.i -= 2;
+                result.p.j -= 1;
+                result.extendBlocks();
+                return result.blocks;
+            case L:
+                result.state = D;
+                result.p.i -= 1;
+                result.p.j += 2;
+                result.extendBlocks();
+                return result.blocks;
+        }
+        return null;
+    }
+
+    public SingleBlock[] rightRotatedBlocks(){
+        Shape result = this.cloneShape();
+        switch(result.state){
+            case O:
+                result.state = R;
+                result.p.i -= 1;
+                result.p.j += 2;
+                result.extendBlocks();
+                return result.blocks;
+            case R:
+                result.state = D;
+                result.p.i += 2;
+                result.p.j += 1;
+                result.extendBlocks();
+                return result.blocks;
+            case D:
+                result.state = L;
+                result.p.i += 1;
+                result.p.j -= 2;
+                result.extendBlocks();
+                return result.blocks;
+            case L:
+                result.state = O;
+                result.p.i -= 2;
+                result.p.j -= 1;
+                result.extendBlocks();
+                return result.blocks;
+        }
+
+        return null;
+    }
+
+    public abstract Shape cloneShape();
 
     public abstract void setTheme(Theme theme);
 
@@ -51,8 +200,6 @@ public abstract class Shape{
         return null;
     }
 
-    public abstract Shape cloneShape();
-
     public static String getThemeID(Shape shape){
         switch(shape.theme){
             case theme1:
@@ -64,8 +211,6 @@ public abstract class Shape{
         }
         return null;
     }
-
-    public abstract SingleBlock[] leftRotatedBlocks();
 
     public void speedUp(){
         this.velocity = 2;

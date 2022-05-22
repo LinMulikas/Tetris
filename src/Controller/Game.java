@@ -3,7 +3,7 @@ package Controller;
 import GUI.Theme;
 import Shape.Shape;
 import Shape.SingleBlock;
-import Shape.Shape_I;
+import Shape.Shape_J;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
@@ -26,7 +26,8 @@ public class Game{
 
     public Game(Stage theStage){
         // TODO: 临时调试，只生成 I
-        this.nextShape = new Shape_I();
+        this.nextShape = Shape.randomShape();
+        Shape.randomState(nextShape);
         this.theStage = theStage;
         theGame = this;
     }
@@ -41,7 +42,8 @@ public class Game{
         }
         this.currentShape = nextShape;
         // TODO: 临时调试，只生成 I
-        this.nextShape = new Shape_I();
+        this.nextShape = Shape.randomShape();
+        Shape.randomState(nextShape);
         return true;
     }
 
@@ -50,15 +52,15 @@ public class Game{
         String urlGrey = "file:src/Resource/Images/Grey.png";
         for(int i = 0; i < 20; i ++){
             for(int j = 0; j < 10; j++){
-                if(this.innerBlocks[i][j] == 1){
+                if(this.innerBlocks[i][j] == 0){
                     this.guiBlocks[i][j].setStyle(
                         "-fx-background-image: " +
-                                "url(" + urlBlack + ");"
+                                "url(" + urlGrey + ");"
                     );
                 }else{
                     this.guiBlocks[i][j].setStyle(
                             "-fx-background-image: " +
-                                    "url(" + urlGrey + ");"
+                                    "url(" + urlBlack + ");"
                     );
                 }
             }

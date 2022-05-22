@@ -38,33 +38,8 @@ public abstract class Shape{
         return ans;
     }
 
-    public void leftRotate(){
-        switch(state){
-            case O:
-                this.state = L;
-                this.p.i += 2;
-                this.p.j += 1;
-                this.extendBlocks();
-                return;
-            case R:
-                this.state = O;
-                this.p.i += 1;
-                this.p.j -= 2;
-                this.extendBlocks();
-                return;
-            case D:
-                this.state = R;
-                this.p.i -= 2;
-                this.p.j -= 1;
-                this.extendBlocks();
-                break;
-            case L:
-                this.state = D;
-                this.p.i -= 1;
-                this.p.j += 2;
-                this.extendBlocks();
-        }
-    }
+    public abstract void leftRotate();
+
 
     public SingleBlock[] rightBlocks(){
         SingleBlock[] ans = new SingleBlock[this.blocks.length];
@@ -78,33 +53,7 @@ public abstract class Shape{
         return ans;
     }
 
-    public void rightRotate(){
-        switch(state){
-            case O:
-                this.state = R;
-                this.p.i -= 1;
-                this.p.j += 2;
-                this.extendBlocks();
-                return;
-            case R:
-                this.state = D;
-                this.p.i += 2;
-                this.p.j += 1;
-                this.extendBlocks();
-                return;
-            case D:
-                this.state = L;
-                this.p.i += 1;
-                this.p.j -= 2;
-                this.extendBlocks();
-                return;
-            case L:
-                this.state = O;
-                this.p.i -= 2;
-                this.p.j -= 1;
-                this.extendBlocks();
-        }
-    }
+    public abstract void rightRotate();
 
     public abstract void extendBlocks();
 
@@ -114,68 +63,18 @@ public abstract class Shape{
 
     public SingleBlock[] leftRotatedBlocks(){
         Shape result = this.cloneShape();
-        switch(result.state){
-            case O:
-                result.state = L;
-                result.p.i += 2;
-                result.p.j += 1;
-                result.extendBlocks();
-                return result.blocks;
-            case R:
-                result.state = O;
-                result.p.i += 1;
-                result.p.j -= 2;
-                result.extendBlocks();
-                return result.blocks;
-            case D:
-                result.state = R;
-                result.p.i -= 2;
-                result.p.j -= 1;
-                result.extendBlocks();
-                return result.blocks;
-            case L:
-                result.state = D;
-                result.p.i -= 1;
-                result.p.j += 2;
-                result.extendBlocks();
-                return result.blocks;
-        }
-        return null;
+        result.leftRotate();
+        return result.blocks;
     }
 
     public SingleBlock[] rightRotatedBlocks(){
         Shape result = this.cloneShape();
-        switch(result.state){
-            case O:
-                result.state = R;
-                result.p.i -= 1;
-                result.p.j += 2;
-                result.extendBlocks();
-                return result.blocks;
-            case R:
-                result.state = D;
-                result.p.i += 2;
-                result.p.j += 1;
-                result.extendBlocks();
-                return result.blocks;
-            case D:
-                result.state = L;
-                result.p.i += 1;
-                result.p.j -= 2;
-                result.extendBlocks();
-                return result.blocks;
-            case L:
-                result.state = O;
-                result.p.i -= 2;
-                result.p.j -= 1;
-                result.extendBlocks();
-                return result.blocks;
-        }
-
-        return null;
+        result.rightRotate();
+        return result.blocks;
     }
 
     public abstract Shape cloneShape();
+
 
     public abstract void setTheme(Theme theme);
 
@@ -287,3 +186,5 @@ public abstract class Shape{
         }
     }
 }
+
+

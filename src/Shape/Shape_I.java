@@ -16,6 +16,64 @@ public class Shape_I extends Shape{
     }
 
     @Override
+    public void leftRotate(){
+        switch(state){
+            case O:
+                this.state = L;
+                this.p.i += 2;
+                this.p.j += 1;
+                this.extendBlocks();
+                return;
+            case R:
+                this.state = O;
+                this.p.i += 1;
+                this.p.j -= 2;
+                this.extendBlocks();
+                return;
+            case D:
+                this.state = R;
+                this.p.i -= 2;
+                this.p.j -= 1;
+                this.extendBlocks();
+                break;
+            case L:
+                this.state = D;
+                this.p.i -= 1;
+                this.p.j += 2;
+                this.extendBlocks();
+        }
+    }
+
+    @Override
+    public void rightRotate(){
+        switch(state){
+            case O:
+                this.state = R;
+                this.p.i -= 1;
+                this.p.j += 2;
+                this.extendBlocks();
+                return;
+            case R:
+                this.state = D;
+                this.p.i += 2;
+                this.p.j += 1;
+                this.extendBlocks();
+                return;
+            case D:
+                this.state = L;
+                this.p.i += 1;
+                this.p.j -= 2;
+                this.extendBlocks();
+                return;
+            case L:
+                this.state = O;
+                this.p.i -= 2;
+                this.p.j -= 1;
+                this.extendBlocks();
+        }
+    }
+
+    @Override
     public void extendBlocks(){
         this.blocks[0].position = this.p;
         switch(this.state){

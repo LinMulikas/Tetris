@@ -26,9 +26,9 @@ public class Game{
     public Stage theStage;
 
     public Game(Stage theStage){
-        this.nextShape = new Shape_Z();
-//        this.nextShape = Shape.randomShape();
-//        Shape.randomState(nextShape);
+//        this.nextShape = new Shape_Z();
+        this.nextShape = Shape.randomShape();
+        Shape.randomState(nextShape);
         this.theStage = theStage;
         theGame = this;
     }
@@ -39,8 +39,8 @@ public class Game{
         if(isLegal(nextShape.blocks)){
             this.currentShape = nextShape;
             this.nextShape = new Shape_Z();
-//            this.nextShape = Shape.randomShape();
-//            Shape.randomState(nextShape);
+            this.nextShape = Shape.randomShape();
+            Shape.randomState(nextShape);
             return true;
         }else{
             return false;

@@ -3,9 +3,9 @@ package Controller;
 import GUI.Theme;
 import Shape.Shape;
 import Shape.SingleBlock;
-import Shape.Shape_J;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import Shape.Shape_Z;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,32 +19,32 @@ public class Game{
     public Shape currentShape = null;
     public Shape nextShape;
     public TextArea infoArea;
+    public boolean isGaming = true;
     public long score = 0;
 
     public static Game theGame;
     public Stage theStage;
 
     public Game(Stage theStage){
-        // TODO: 临时调试，只生成 I
-        this.nextShape = Shape.randomShape();
-        Shape.randomState(nextShape);
+        this.nextShape = new Shape_Z();
+//        this.nextShape = Shape.randomShape();
+//        Shape.randomState(nextShape);
         this.theStage = theStage;
         theGame = this;
     }
 
-    public boolean creatCurrentShape(){
+    public boolean createCurrentShape(){
         Shape.randomState(this.nextShape);
         nextShape.extendBlocks();
-        for(SingleBlock block : nextShape.blocks){
-            if(this.innerBlocks[block.position.i][block.position.j] == 1){
-                return false;
-            }
+        if(isLegal(nextShape.blocks)){
+            this.currentShape = nextShape;
+            this.nextShape = new Shape_Z();
+//            this.nextShape = Shape.randomShape();
+//            Shape.randomState(nextShape);
+            return true;
+        }else{
+            return false;
         }
-        this.currentShape = nextShape;
-        // TODO: 临时调试，只生成 I
-        this.nextShape = Shape.randomShape();
-        Shape.randomState(nextShape);
-        return true;
     }
 
     public void drawBlocks(){
@@ -96,10 +96,11 @@ public class Game{
             @Override
             public void run(){
                 if(theGame.currentShape == null){
-                    if(theGame.creatCurrentShape()){
+                    if(theGame.createCurrentShape()){
                         theGame.drawBlocks();
                     }else{
                         System.out.println("Game Over");
+                        theGame.isGaming = false;
                         this.cancel();
                     }
                 }else{
@@ -108,12 +109,6 @@ public class Game{
                         theGame.drawBlocks();
                     }else{
                         theGame.meltShape();
-                        if(theGame.creatCurrentShape()){
-                            theGame.drawBlocks();
-                        }else{
-                            System.out.println("Game Over");
-                            this.cancel();
-                        }
                         theGame.drawBlocks();
                         try{
                             theGame.checkRows();
@@ -124,7 +119,7 @@ public class Game{
                     }
                 }
             }
-        }, 0,500);
+        }, 0,200);
     }
 
     public void checkRows() throws InterruptedException{

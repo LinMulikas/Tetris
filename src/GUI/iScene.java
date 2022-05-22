@@ -18,6 +18,7 @@ public class iScene{
     public static Scene gameScene;
     public static Scene settingScene;
     public static Scene recordScene;
+    public static Scene endingScene;
     public static Game theGame = Game.theGame;
 
     static{
@@ -174,55 +175,92 @@ public class iScene{
 
         gameScene = new Scene(vb_mainGame);
         gameScene.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.Q){
-                if(theGame.tryLeftRotate()){
-                    theGame.shapeRotateLeft();
-                }else{
-                    theGame.putMessage("左旋失败\n");
-                }
-            }
-            if(event.getCode() == KeyCode.E){
-                if(theGame.tryRightRotate()){
-                    theGame.shapeRotateRight();
-                }else{
-                    theGame.putMessage("右旋失败\n");
-                }
-            }
-            if(event.getCode() == KeyCode.A){
-                if(theGame.tryMoveLeft()){
-                    theGame.shapeMoveLeft();
-                }else{
-                    theGame.putMessage("左移失败\n");
-                }
-            }
-            if(event.getCode() == KeyCode.D){
-                if(theGame.tryMoveRight()){
-                    theGame.shapeMoveRight();
-                }else{
-                    theGame.putMessage("右移失败\n");
-                }
-            }
-            if(event.getCode() == KeyCode.S){
-                if(theGame.tryDown()){
-                    theGame.shapeMoveDown();
-                    theGame.drawBlocks();
-                }else{
-                    theGame.meltShape();
-                    if(theGame.creatCurrentShape()){
-                        theGame.drawBlocks();
+            if(!theGame.isGaming){
+                theGame.theStage.setScene(endingScene);
+            }else{
+                if(event.getCode() == KeyCode.Q){
+                    if(theGame.tryLeftRotate()){
+                        theGame.shapeRotateLeft();
                     }else{
-                        System.out.println("Game Over");
+                        theGame.putMessage("左旋失败\n");
                     }
-                    theGame.drawBlocks();
-                    try{
-                        theGame.checkRows();
+                }
+                if(event.getCode() == KeyCode.E){
+                    if(theGame.tryRightRotate()){
+                        theGame.shapeRotateRight();
+                    }else{
+                        theGame.putMessage("右旋失败\n");
                     }
-                    catch(InterruptedException e){
-                        e.printStackTrace();
+                }
+                if(event.getCode() == KeyCode.A){
+                    if(theGame.tryMoveLeft()){
+                        theGame.shapeMoveLeft();
+                    }else{
+                        theGame.putMessage("左移失败\n");
+                    }
+                }
+                if(event.getCode() == KeyCode.D){
+                    if(theGame.tryMoveRight()){
+                        theGame.shapeMoveRight();
+                    }else{
+                        theGame.putMessage("右移失败\n");
                     }
                 }
             }
+
+            // 速降功能 bug 太多了，所以注释掉了
+
+//            if(event.getCode() == KeyCode.S){
+//                if(theGame.tryDown()){
+//                    theGame.shapeMoveDown();
+//                    theGame.drawBlocks();
+//                }else{
+//                    theGame.meltShape();
+//                    if(theGame.creatCurrentShape()){
+//                        theGame.drawBlocks();
+//                    }else{
+//                        theGame.theStage.setScene(iScene.endingScene);
+//                    }
+//                    theGame.drawBlocks();
+//                    try{
+//                        theGame.checkRows();
+//                    }
+//                    catch(InterruptedException e){
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
         });
+
+        // Ending Scene
+        FlowPane endingPane = new FlowPane();
+        endingPane.setPrefSize(1200, 900);
+
+        VBox vb_endingChoice = new VBox();
+        vb_endingChoice.setSpacing(100);
+
+        Button btn_BackToWelcome = new Button("返回主界面");
+        btn_BackToWelcome.setPrefSize(120, 40);
+        btn_BackToWelcome.setOnMouseClicked(event -> {
+            theGame.theStage.setScene(welcomeScene);
+        });
+
+        Button btn_SaveScore = new Button("保存分数");
+        btn_SaveScore.setPrefSize(120, 40);
+        btn_SaveScore.setOnMouseClicked(event -> {
+            System.out.println("保存分数");
+        });
+
+        Button btn_Quit = new Button("退出游戏");
+        btn_Quit.setOnMouseClicked(event -> {
+            theStage.close();
+        });
+
+
+        vb_endingChoice.getChildren().addAll(btn_BackToWelcome, btn_SaveScore, btn_Quit);
+        endingPane.getChildren().add(vb_endingChoice);
+        endingPane.setAlignment(Pos.CENTER);
+        endingScene = new Scene(endingPane);
     }
 
 

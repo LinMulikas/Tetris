@@ -7,6 +7,8 @@ import static Shape.Direction.*;
 import static Shape.Direction.O;
 
 public class Shape_Z extends Shape{
+    public Position p = new Position(1, 4);
+
     public Shape_Z(){
         theme = Theme.theme1;
         blocks = new SingleBlock[4];
@@ -20,26 +22,18 @@ public class Shape_Z extends Shape{
         switch(state){
             case O:
                 this.state = L;
-                this.p.i += 1;
-                this.p.j += 1;
                 this.extendBlocks();
                 return;
             case R:
                 this.state = O;
-                this.p.i += 1;
-                this.p.j -= 1;
                 this.extendBlocks();
                 return;
             case D:
                 this.state = R;
-                this.p.i -= 1;
-                this.p.j -= 1;
                 this.extendBlocks();
                 break;
             case L:
                 this.state = D;
-                this.p.i -= 1;
-                this.p.j += 1;
                 this.extendBlocks();
         }
     }
@@ -49,26 +43,18 @@ public class Shape_Z extends Shape{
         switch(state){
             case O:
                 this.state = R;
-                this.p.i -= 1;
-                this.p.j += 1;
                 this.extendBlocks();
                 return;
             case R:
                 this.state = D;
-                this.p.i += 1;
-                this.p.j += 1;
                 this.extendBlocks();
                 return;
             case D:
                 this.state = L;
-                this.p.i += 1;
-                this.p.j -= 1;
                 this.extendBlocks();
                 return;
             case L:
                 this.state = O;
-                this.p.i -= 1;
-                this.p.j -= 1;
                 this.extendBlocks();
         }
 
@@ -78,28 +64,28 @@ public class Shape_Z extends Shape{
     public void extendBlocks(){
         switch(this.state){
             case O:
-                this.blocks[0].position = this.p.up();
-                this.blocks[1].position = this.p.up().right();
-                this.blocks[2].position = this.p.right();
-                this.blocks[3].position = this.p.right().right();
+                this.blocks[0].position = this.p.up().left();
+                this.blocks[1].position = this.p.up();
+                this.blocks[2].position = this.p;
+                this.blocks[3].position = this.p.right();
                 break;
             case R:
-                this.blocks[0].position = this.p.right();
-                this.blocks[1].position = this.p.right().down();
-                this.blocks[2].position = this.p.down();
-                this.blocks[3].position = this.p.down().down();
+                this.blocks[0].position = this.p.right().up();
+                this.blocks[1].position = this.p.right();
+                this.blocks[2].position = this.p;
+                this.blocks[3].position = this.p.down();
                 break;
             case D:
-                this.blocks[0].position = this.p.down();
-                this.blocks[1].position = this.p.down().left();
-                this.blocks[2].position = this.p.left();
-                this.blocks[3].position = this.p.left().left();
+                this.blocks[0].position = this.p.down().right();
+                this.blocks[1].position = this.p.down();
+                this.blocks[2].position = this.p;
+                this.blocks[3].position = this.p.left();
                 break;
             case L:
-                this.blocks[0].position = this.p.left();
-                this.blocks[1].position = this.p.left().up();
-                this.blocks[2].position = this.p.up();
-                this.blocks[3].position = this.p.up().up();
+                this.blocks[0].position = this.p.left().down();
+                this.blocks[1].position = this.p.left();
+                this.blocks[2].position = this.p;
+                this.blocks[3].position = this.p.up();
         }
     }
 

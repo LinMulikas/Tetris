@@ -2,18 +2,17 @@ package GUI;
 
 import Controller.*;
 import Shape.SingleBlock;
+import com.sun.tools.javadoc.Start;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
 import static GUI.Theme.*;
 
 
 public class iScene{
-    public static Stage theStage;
     public static Scene welcomeScene;
     public static Scene gameScene;
     public static Scene settingScene;
@@ -88,6 +87,10 @@ public class iScene{
         ta_infoArea.setVisible(true);
         theGame.infoArea = ta_infoArea;
 
+        Label label = new Label();
+        theGame.scoreLabel = label;
+        label.setText("分数:" + String.valueOf(theGame.score));
+
         GridPane grid_ctrlPane = new GridPane();
         Button btn_ctrl1 = new Button("Control 1");
         Button btn_ctrl2 = new Button("Control 2");
@@ -96,7 +99,7 @@ public class iScene{
         grid_ctrlPane.add(btn_ctrl2, 2, 1);
         grid_ctrlPane.add(btn_ctrl3, 1, 2);
 
-        vb_infoPane.getChildren().addAll(ta_infoArea, grid_ctrlPane);
+        vb_infoPane.getChildren().addAll(label, ta_infoArea, grid_ctrlPane);
         hb_gamePane.getChildren().addAll(grid_GamePane, vb_infoPane);
 
         // Menu
@@ -242,6 +245,7 @@ public class iScene{
         Button btn_BackToWelcome = new Button("返回主界面");
         btn_BackToWelcome.setPrefSize(120, 40);
         btn_BackToWelcome.setOnMouseClicked(event -> {
+            theGame = new Game(theGame.theStage);
             theGame.theStage.setScene(welcomeScene);
         });
 
@@ -252,8 +256,9 @@ public class iScene{
         });
 
         Button btn_Quit = new Button("退出游戏");
+        btn_Quit.setPrefSize(120, 40);
         btn_Quit.setOnMouseClicked(event -> {
-            theStage.close();
+            theGame.theStage.close();
         });
 
 

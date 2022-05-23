@@ -10,11 +10,13 @@ public class Start extends Application{
         launch(args);
     }
     public static Game theGame;
+    public static Stage theStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        theStage = primaryStage;
         theGame = new Game(primaryStage);
-        primaryStage.setTitle("Test");
+        primaryStage.setTitle("Tetris");
         Scene scene = iScene.welcomeScene;
         primaryStage.setScene(scene);
         primaryStage.show();

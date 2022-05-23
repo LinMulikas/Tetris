@@ -17,45 +17,14 @@ public class Shape_O extends Shape{
 
     @Override
     public void leftRotate(){
-        switch(state){
-            case O:
-                this.state = L;
-                this.extendBlocks();
-                return;
-            case R:
-                this.state = O;
-                this.extendBlocks();
-                return;
-            case D:
-                this.state = R;
-                this.extendBlocks();
-                break;
-            case L:
-                this.state = D;
-                this.extendBlocks();
-        }
+        this.extendBlocks();
+        return;
     }
 
     @Override
     public void rightRotate(){
-        switch(state){
-            case O:
-                this.state = R;
-                this.extendBlocks();
-                return;
-            case R:
-                this.state = D;
-                this.extendBlocks();
-                return;
-            case D:
-                this.state = L;
-                this.extendBlocks();
-                return;
-            case L:
-                this.state = O;
-                this.extendBlocks();
-        }
-
+        this.extendBlocks();
+        return;
     }
 
     @Override

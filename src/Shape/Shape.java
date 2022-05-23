@@ -8,7 +8,8 @@ import java.util.Random;
 import static Shape.Direction.*;
 
 public abstract class Shape{
-    Position p = new Position(1, 3);
+    public Position p = new Position(1, 3);
+
     Theme theme;
     public SingleBlock[] blocks;
     private int velocity = 1;

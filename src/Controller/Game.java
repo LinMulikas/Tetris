@@ -3,9 +3,11 @@ package Controller;
 import GUI.Theme;
 import Shape.Shape;
 import Shape.SingleBlock;
+import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import Shape.Shape_Z;
+import Shape.Shape_O;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,6 +21,7 @@ public class Game{
     public Shape currentShape = null;
     public Shape nextShape;
     public TextArea infoArea;
+    public Label scoreLabel;
     public boolean isGaming = true;
     public long score = 0;
 
@@ -26,9 +29,9 @@ public class Game{
     public Stage theStage;
 
     public Game(Stage theStage){
-//        this.nextShape = new Shape_Z();
-        this.nextShape = Shape.randomShape();
-        Shape.randomState(nextShape);
+        this.nextShape = new Shape_O();
+//        this.nextShape = Shape.randomShape();
+//        Shape.randomState(nextShape);
         this.theStage = theStage;
         theGame = this;
     }
@@ -38,9 +41,9 @@ public class Game{
         nextShape.extendBlocks();
         if(isLegal(nextShape.blocks)){
             this.currentShape = nextShape;
-            this.nextShape = new Shape_Z();
-            this.nextShape = Shape.randomShape();
-            Shape.randomState(nextShape);
+            this.nextShape = new Shape_O();
+//            this.nextShape = Shape.randomShape();
+//            Shape.randomState(nextShape);
             return true;
         }else{
             return false;
@@ -123,7 +126,8 @@ public class Game{
     }
 
     public void checkRows() throws InterruptedException{
-        int[] count = new int[20];
+        int cnt = 1;
+        long score = 0;
         for(int i = 19; i >= 0; i--){
             int number = 0;
             for(int j = 0; j < 10; j++){
@@ -133,12 +137,24 @@ public class Game{
             }
             if(number == 10){
                 this.killRow(i);
+                score += 10L*cnt;
                 this.drawBlocks();
                 this.upperMoveDown(i);
                 this.drawBlocks();
                 i++;
+                cnt ++;
                 Thread.sleep(300);
+            }else{
+                cnt = 1;
             }
+            long finalScore = score;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    theGame.score += finalScore;
+                    theGame.scoreLabel.setText("分数:" + String.valueOf(theGame.score));
+                }
+            });
         }
     }
 
@@ -211,16 +227,21 @@ public class Game{
     }
 
     public boolean tryLeftRotate(){
+        if(this.currentShape == null) return false;
+
         SingleBlock[] blocks = this.currentShape.leftRotatedBlocks();
         return isLegal(blocks);
     }
 
     public boolean tryRightRotate(){
+        if(this.currentShape == null) return false;
         SingleBlock[] blocks = this.currentShape.rightRotatedBlocks();
         return isLegal(blocks);
     }
 
     public boolean tryMoveLeft(){
+        if(this.currentShape == null) return false;
+
         SingleBlock[] blocks = this.currentShape.leftBlocks();
         return isLegal(blocks);
     }
@@ -236,6 +257,8 @@ public class Game{
     }
 
     public boolean tryMoveRight(){
+        if(this.currentShape == null) return false;
+
         SingleBlock[] blocks = this.currentShape.rightBlocks();
         return isLegal(blocks);
     }

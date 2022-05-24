@@ -24,6 +24,7 @@ public class Game{
     public Label scoreLabel;
     public boolean isGaming = true;
     public long score = 0;
+    public Theme theme = Theme.theme1;
 
     public static Game theGame;
     public Stage theStage;
@@ -75,7 +76,7 @@ public class Game{
                 String urlStyle = "file:src/Resource/Images/"
                         + Shape.getColor(currentShape)
                         + "_"
-                        + Shape.getThemeID(currentShape)
+                        + theGame.getThemeID()
                         + ".png";
                 this.guiBlocks[x][y].setStyle(
                         "-fx-background-image: " +
@@ -83,6 +84,18 @@ public class Game{
                 );
             }
         }
+    }
+
+    private String getThemeID(){
+        switch(theGame.theme){
+            case theme1:
+                return "1";
+            case theme2:
+                return "2";
+            case theme3:
+                return "3";
+        }
+        return null;
     }
 
     boolean isEmpty(int i, int j){
@@ -264,7 +277,7 @@ public class Game{
     }
 
     public void setTheme(Theme theme){
-
+        this.theme = theme;
     }
 
     public void putMessage(String str){

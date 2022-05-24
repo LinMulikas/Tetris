@@ -54,7 +54,12 @@ public class iScene{
         flowPane.setPrefWidth(1280);
         flowPane.setPrefHeight(768);
 
+        String url_Background = "file:src/Resource/Images/Tetris.jpg";
+        flowPane.setStyle(
+                " -fx-background-image: url(" + url_Background + "); " +
+                " -fx-background-size: 120%;");
         welcomeScene = new Scene(flowPane);
+
 
         // gamePane
         HBox hb_gamePane = new HBox();
@@ -136,13 +141,13 @@ public class iScene{
 
         ToggleGroup schemeChoose = new ToggleGroup();
         RadioMenuItem itemA = new RadioMenuItem("Scheme A");
+        itemA.setSelected(true);
         itemA.setOnAction(event -> {
             if(itemA.isSelected()){
                 theGame.setTheme(theme1);
             }
         });
         RadioMenuItem itemB = new RadioMenuItem("Scheme B");
-        itemB.setSelected(true);
         itemB.setOnAction(event -> {
             if(itemB.isSelected()){
                 theGame.setTheme(theme2);
@@ -261,8 +266,9 @@ public class iScene{
             theGame.theStage.close();
         });
 
+        Label lb_endingScore = new Label("分数:" + String.valueOf(theGame.score));
 
-        vb_endingChoice.getChildren().addAll(btn_BackToWelcome, btn_SaveScore, btn_Quit);
+        vb_endingChoice.getChildren().addAll(lb_endingScore, btn_BackToWelcome, btn_SaveScore, btn_Quit);
         endingPane.getChildren().add(vb_endingChoice);
         endingPane.setAlignment(Pos.CENTER);
         endingScene = new Scene(endingPane);
